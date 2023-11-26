@@ -22,6 +22,7 @@ This widget for the Scriptable app displays the ping time, HTTP status code, and
 - Add the widget to your home screen for continuous monitoring.
 
 ![Widget Screenshot](img/img.jpeg)
+
 [Example http-statuscode.com](https://http-statuscode.com)
 
 
