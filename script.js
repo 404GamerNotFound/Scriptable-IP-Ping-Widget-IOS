@@ -32,7 +32,7 @@ function addHistoryEntry(column, data) {
     const pingColor = data.ping > 500 ? Color.red() : (data.ping > 200 ? Color.yellow() : Color.green());
     const formattedDate = new Date(data.timestamp).toLocaleString(); // Datum im lokalen Format
     
-    let historyText = column.addText(`Ping: ${data.ping} ms at ${formattedDate}`);
+    let historyText = column.addText(`${data.ping} (${formattedDate})`);
     historyText.textColor = pingColor;
     historyText.font = Font.systemFont(10);
 }
