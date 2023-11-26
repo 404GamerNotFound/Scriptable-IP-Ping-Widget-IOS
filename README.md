@@ -36,7 +36,7 @@ This widget for the Scriptable app displays the ping time, HTTP status code, and
 ## Script
 
 ```javascript
-const ip = "http-statuscode.com"; // Replace with your server's IP
+const ip = args.widgetParameter || "google.de"; // ADD IP OR DOMAIN as Widget Parameter
 const url = `http://${ip}`;
 
 // ... [rest of the script] ...
