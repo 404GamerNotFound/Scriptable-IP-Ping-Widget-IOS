@@ -51,7 +51,7 @@ async function createWidget(result, size = "small") {
     // Ping Value
     let pingValue = pingStack.addText(`${result.ping}`);
     pingValue.textColor = Color.green();
-    pingValue.font = Font.boldSystemFont(50);
+    pingValue.font = Font.boldSystemFont(60);
     pingValue.textOpacity = 1.0;
 
     // Ping Unit
@@ -70,9 +70,9 @@ async function createWidget(result, size = "small") {
 
 let title = detailsStack.addText("Server Ping");
         title.textColor = Color.white();
-        title.font = Font.boldSystemFont(16);
+        title.font = Font.boldSystemFont(20);
         
-        widget.addSpacer(5);
+        widget.addSpacer(9);
 
 
         let pingTextIp = detailsStack.addText(`${url}`);
