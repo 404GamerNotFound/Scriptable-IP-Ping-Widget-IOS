@@ -3,7 +3,7 @@ const url = `http://${ip}`;
 const fileManager = FileManager.local();
 const historyFilePath = fileManager.joinPath(fileManager.documentsDirectory(), 'ping_history.json');
 
-// Funktion zum Speichern der Ping-Daten
+// Save Ping Data
 async function savePingData(pingData) {
     let historyData = [];
     if (fileManager.fileExists(historyFilePath)) {
@@ -11,14 +11,14 @@ async function savePingData(pingData) {
         historyData = JSON.parse(rawHistoryData);
     }
     historyData.push(pingData);
-    // Alte Daten entfernen, um die Dateigröße zu begrenzen
-    if (historyData.length > 50) { // Behält nur die letzten 50 Einträge
+    // Delete old data
+    if (historyData.length > 50) {
         historyData = historyData.slice(-50);
     }
     fileManager.writeString(historyFilePath, JSON.stringify(historyData));
 }
 
-// Funktion zum Lesen der gespeicherten Ping-Daten
+// read old hostory entry
 function readPingHistory() {
     if (fileManager.fileExists(historyFilePath)) {
         const rawHistoryData = fileManager.readString(historyFilePath);
@@ -30,7 +30,7 @@ function readPingHistory() {
 
 function addHistoryEntry(column, data) {
     const pingColor = data.ping > 500 ? Color.red() : (data.ping > 200 ? Color.yellow() : Color.green());
-    const formattedDate = new Date(data.timestamp).toLocaleString(); // Datum im lokalen Format
+    const formattedDate = new Date(data.timestamp).toLocaleString(); // Date in local format
     
     let historyText = column.addText(`${data.ping} (${formattedDate})`);
     historyText.textColor = pingColor;
@@ -49,7 +49,7 @@ async function pingServer() {
         const responseText = await req.loadString();
         const end = new Date().getTime();
         statusCode = req.response.statusCode; // HTTP-Statuscode
-        dataSize = responseText.length; // Länge des Antworttextes
+        dataSize = responseText.length; // Size of the response
         return { ping: end - start, statusCode, dataSize };
     } catch (e) {
         console.log(e);
@@ -85,7 +85,7 @@ async function createWidget(result, size = "small") {
         // Ping Stack with centered content
         let pingStack = mainStack.addStack();
         pingStack.layoutVertically();
-        pingStack.centerAlignContent();  // Diese Zeile zentriert den Inhalt des pingStack
+        pingStack.centerAlignContent();  // center
         pingStack.size = new Size(150, 0); // Set a fixed width for the pingStack
         
         // Ping Value
@@ -139,7 +139,7 @@ async function createWidget(result, size = "small") {
         // Ping Stack with centered content
         let pingStack = mainStack.addStack();
         pingStack.layoutVertically();
-        pingStack.centerAlignContent();  // Diese Zeile zentriert den Inhalt des pingStack
+        pingStack.centerAlignContent();
         pingStack.size = new Size(150, 0); // Set a fixed width for the pingStack
         
         // Ping Value
@@ -189,7 +189,6 @@ async function createWidget(result, size = "small") {
         // Trennlinie oder Spacer
         widget.addSpacer();
         
-        // Historie-Stack
         // Historie-Stack
         let historyStack = widget.addStack();
         historyStack.layoutHorizontally();
