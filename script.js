@@ -1,4 +1,4 @@
-const ip = args.widgetParameter || "google.de"; // ADD IP OR DOMAIN as Widget Parameter
+const ip = args.widgetParameter || "http-statuscode.com"; // ADD IP OR DOMAIN as Widget Parameter
 const url = `http://${ip}`;
 
 async function pingServer() {
@@ -38,39 +38,95 @@ async function createWidget(result, size = "small") {
     let widget = new ListWidget();
     widget.backgroundColor = new Color("#1A1A1A");
 
-    // Title
-    let title = widget.addText("Server Ping");
-    title.textColor = Color.white();
-    title.font = Font.boldSystemFont(16);
-    
-    widget.addSpacer(5);
+    if (size === "medium") {
+        let mainStack = widget.addStack();
+    mainStack.layoutHorizontally();
 
-    // URL
-    let pingTextIp = widget.addText(`${url}`);
-    pingTextIp.textColor = Color.white();
-    pingTextIp.font = Font.systemFont(8);
+    // Left side - Large Ping
+    let pingStack = mainStack.addStack();
+    pingStack.layoutVertically();
+    pingStack.centerAlignContent();
+    pingStack.size = new Size(150, 0); // Set a fixed width for the pingStack
 
-    widget.addSpacer(5);
+    // Ping Value
+    let pingValue = pingStack.addText(`${result.ping}`);
+    pingValue.textColor = Color.green();
+    pingValue.font = Font.boldSystemFont(50);
+    pingValue.textOpacity = 1.0;
 
-    // Ping
-    let pingText = widget.addText(`${result.ping} ms`);
-    pingText.textColor = Color.green();
-    pingText.font = Font.systemFont(size === "small" ? 32 : 24);
+    // Ping Unit
+    let pingUnit = pingStack.addText(`ms`);
+    pingUnit.textColor = Color.green();
+    pingUnit.font = Font.systemFont(16);
+    pingUnit.textOpacity = 0.8;
 
-    widget.addSpacer(5);
+    mainStack.addSpacer();
 
-    // Status and Size
-    let statusText = widget.addText(`Status: ${result.statusCode} \nSize: ${result.dataSize} Zeichen`);
-    statusText.textColor = Color.white();
-    statusText.font = Font.systemFont(12);
+    // Right side - Details
+    let detailsStack = mainStack.addStack();
+    detailsStack.layoutVertically();
+    detailsStack.spacing = 4;
+    detailsStack.size = new Size(150, 0); // Set a fixed width for the detailsStack
 
-    widget.addSpacer(5);
+let title = detailsStack.addText("Server Ping");
+        title.textColor = Color.white();
+        title.font = Font.boldSystemFont(16);
+        
+        widget.addSpacer(5);
 
-    // Updated Time
-    const updateTime = new Date();
-    let updateText = widget.addText(`Updated: ${formatTime(updateTime)}`);
-    updateText.textColor = Color.gray();
-    updateText.font = Font.systemFont(12);
+
+        let pingTextIp = detailsStack.addText(`${url}`);
+        pingTextIp.textColor = Color.white();
+        pingTextIp.font = Font.systemFont(8);
+
+        let statusText = detailsStack.addText(`Status: ${result.statusCode}`);
+        statusText.textColor = Color.white();
+        statusText.font = Font.systemFont(12);
+
+        let sizeText = detailsStack.addText(`Size: ${result.dataSize} Zeichen`);
+        sizeText.textColor = Color.white();
+        sizeText.font = Font.systemFont(12);
+
+        const updateTime = new Date();
+        let updateText = detailsStack.addText(`Updated: ${formatTime(updateTime)}`);
+        updateText.textColor = Color.gray();
+        updateText.font = Font.systemFont(12);
+    } else {
+        // Title
+        let title = widget.addText("Server Ping");
+        title.textColor = Color.white();
+        title.font = Font.boldSystemFont(16);
+        
+        widget.addSpacer(5);
+
+        // URL
+        let pingTextIp = widget.addText(`${url}`);
+        pingTextIp.textColor = Color.white();
+        pingTextIp.font = Font.systemFont(8);
+
+        widget.addSpacer(5);
+
+        // Ping
+        let pingText = widget.addText(`${result.ping} ms`);
+        pingText.textColor = Color.green();
+        pingText.font = Font.systemFont(32);
+
+        widget.addSpacer(5);
+
+        // Status and Size
+        let statusText = widget.addText(`Status: ${result.statusCode} \nSize: ${result.dataSize} Zeichen`);
+        statusText.textColor = Color.white();
+        statusText.font = Font.systemFont(12);
+
+        widget.addSpacer(5);
+
+        // Updated Time
+        const updateTime = new Date();
+        let updateText = widget.addText(`Updated: ${formatTime(updateTime)}`);
+        updateText.textColor = Color.gray();
+        updateText.font = Font.systemFont(12);
+
+    }
 
     return widget;
 }
