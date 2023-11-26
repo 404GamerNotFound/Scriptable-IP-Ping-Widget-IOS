@@ -19,9 +19,19 @@ async function pingServer() {
 }
 
 function formatTime(date) {
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    return `${hours}:${minutes}`;
+    let ampm = "AM";
+    let hours = date.getHours();
+    let minutes = date.getMinutes().toString().padStart(2, '0');
+    let seconds = date.getSeconds().toString().padStart(2, '0');
+
+    if (hours === 0) {
+        hours = 12;
+    } else if (hours > 12) {
+        hours = hours - 12;
+        ampm = "PM";
+    }
+
+    return `${hours}:${minutes}:${seconds} ${ampm}`;
 }
 
 async function createWidget(result) {
