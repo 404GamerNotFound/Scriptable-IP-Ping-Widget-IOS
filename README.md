@@ -17,11 +17,16 @@ This widget for the Scriptable app displays the ping time, HTTP status code, and
 
 ## Usage
 
-- Edit the `const ip = "localhost";` line in the script to point to your desired server.
+- Set the server IP or domain as a widget parameter. Default is set to "http-statuscode.com".
+- To do this, long press the widget on your home screen and choose "Edit Widget".
+- In the "Parameter" field, enter the desired IP address or domain name.
+- The script will use this parameter to monitor the specified server.
 - Run the script in Scriptable to see the widget preview.
 - Add the widget to your home screen for continuous monitoring.
 
+
 ![Widget Screenshot](img/img.jpeg)
+![Widget Screenshot](img/img2.jpeg)
 
 [Example http-statuscode.com](https://http-statuscode.com)
 

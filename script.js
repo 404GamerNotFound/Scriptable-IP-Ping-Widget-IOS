@@ -1,4 +1,4 @@
-const ip = "localhost"; // ADD IP OR DOMAIN
+const ip = args.widgetParameter || "google.de"; // ADD IP OR DOMAIN as Widget Parameter
 const url = `http://${ip}`;
 
 async function pingServer() {
