@@ -34,7 +34,8 @@ const url = `http://${ip}`;
 
 // ... [rest of the script] ...
 
-main();```
+main();
+```
 
 ## Customization
 
