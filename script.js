@@ -34,32 +34,39 @@ function formatTime(date) {
     return `${hours}:${minutes}:${seconds} ${ampm}`;
 }
 
-async function createWidget(result) {
+async function createWidget(result, size = "small") {
     let widget = new ListWidget();
     widget.backgroundColor = new Color("#1A1A1A");
 
+    // Title
     let title = widget.addText("Server Ping");
     title.textColor = Color.white();
     title.font = Font.boldSystemFont(16);
+    
+    widget.addSpacer(5);
 
+    // URL
     let pingTextIp = widget.addText(`${url}`);
     pingTextIp.textColor = Color.white();
     pingTextIp.font = Font.systemFont(8);
 
     widget.addSpacer(5);
 
+    // Ping
     let pingText = widget.addText(`${result.ping} ms`);
     pingText.textColor = Color.green();
-    pingText.font = Font.systemFont(32);
+    pingText.font = Font.systemFont(size === "small" ? 32 : 24);
 
     widget.addSpacer(5);
 
+    // Status and Size
     let statusText = widget.addText(`Status: ${result.statusCode} \nSize: ${result.dataSize} Zeichen`);
     statusText.textColor = Color.white();
     statusText.font = Font.systemFont(12);
 
     widget.addSpacer(5);
 
+    // Updated Time
     const updateTime = new Date();
     let updateText = widget.addText(`Updated: ${formatTime(updateTime)}`);
     updateText.textColor = Color.gray();
@@ -70,11 +77,17 @@ async function createWidget(result) {
 
 async function main() {
     const result = await pingServer();
-    const widget = await createWidget(result);
+    let widget;
+    if (config.widgetFamily === "medium") {
+        widget = await createWidget(result, "medium");
+    } else {
+        widget = await createWidget(result, "small");
+    }
+    
     if (config.runsInWidget) {
         Script.setWidget(widget);
     } else {
-        widget.presentSmall();
+        config.widgetFamily === "medium" ? widget.presentMedium() : widget.presentSmall();
     }
     Script.complete();
 }
