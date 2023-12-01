@@ -12,8 +12,8 @@ async function savePingData(pingData) {
     }
     historyData.push(pingData);
     // Delete old data
-    if (historyData.length > 50) {
-        historyData = historyData.slice(-50);
+    if (historyData.length > 42) {
+        historyData = historyData.slice(-42);
     }
     fileManager.writeString(historyFilePath, JSON.stringify(historyData));
 }
